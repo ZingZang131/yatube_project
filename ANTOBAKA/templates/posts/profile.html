@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}Профиль пользователя {{ author.username }}{% endblock %}
+{% block content %}
+<div class="container py-4">
+  
+  <!-- Информация о пользователе -->
+  <div class="card border-0 bg-light mb-4">
+    <div class="card-body">
+      <div class="d-flex align-items-center">
+        <div class="bg-primary bg-opacity-10 p-4 rounded-circle me-4">
+          <i class="bi bi-person-circle text-primary fs-1"></i>
+        </div>
+        <div>
+          <h1 class="display-6 fw-bold mb-2">
+            {% if author.get_full_name %}
+              {{ author.get_full_name }}
+            {% else %}
+              {{ author.username }}
+            {% endif %}
+          </h1>
+          <p class="text-secondary mb-1">
+            <i class="bi bi-at"></i> {{ author.username }}
+          </p>
+          <p class="mb-0">
+            <span class="badge bg-primary">
+              <i class="bi bi-file-text"></i> Постов: {{ post_count }}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Список постов -->
+  <h2 class="mb-3">Посты пользователя</h2>
+  
+  <div class="row">
+    {% for post in page_obj %}
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 shadow-sm border-0 hover-card">
+          <div class="card-body">
+            <h5 class="card-title mb-3">
+              <a href="{% url 'posts:post_detail' post.id %}" class="text-dark text-decoration-none">
+                {{ post.title|default:"Пост"|truncatechars:50 }}
+              </a>
+            </h5>
+            <p class="card-text text-secondary">{{ post.text|truncatechars:120 }}</p>
+          </div>
+          <div class="card-footer bg-white border-0 pb-3">
+            <div class="d-flex justify-content-between align-items-center">
+              <small class="text-secondary">
+                <i class="bi bi-calendar3 me-1"></i> {{ post.pub_date|date:"d.m.Y" }}
+              </small>
+              <a href="{% url 'posts:post_detail' post.id %}" class="btn btn-outline-primary btn-sm rounded-pill px-4">
+                Читать <i class="bi bi-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12">
+        <div class="alert alert-info text-center py-5">
+          <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+          <h4>У пользователя пока нет постов</h4>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Пагинация -->
+  {% if page_obj.has_other_pages %}
+    <nav class="mt-4">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page=1">« Первая</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">‹ Предыдущая</a>
+          </li>
+        {% endif %}
+        
+        {% for i in page_obj.paginator.page_range %}
+          {% if page_obj.number == i %}
+            <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+          {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %}
+            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+          {% endif %}
+        {% endfor %}
+        
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая ›</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Последняя »</a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+</div>
+{% endblock %}

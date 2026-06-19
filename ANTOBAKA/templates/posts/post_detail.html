@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title|default:"Пост" }} - Yatube{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <!-- Навигация (хлебные крошки) -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Главная</a></li>
+                {% if post.group %}
+                    <li class="breadcrumb-item"><a href="{% url 'posts:groups_all' %}">Сообщества</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'posts:group_list' post.group.slug %}">{{ post.group.title }}</a></li>
+                {% endif %}
+                <li class="breadcrumb-item active" aria-current="page">Пост</li>
+            </ol>
+        </nav>
+        
+        <!-- Карточка поста -->
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white border-0 pt-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1 class="display-6 fw-bold">{{ post.title|default:"Пост без названия" }}</h1>
+                    {% if post.group %}
+                        <span class="badge bg-primary">{{ post.group.title }}</span>
+                    {% endif %}
+                </div>
+                
+                <div class="d-flex align-items-center text-secondary mt-3">
+                    <div class="me-4">
+                        <i class="bi bi-person-circle me-1"></i>
+                        <span>{{ post.author.username }}</span>
+                    </div>
+                    <div class="me-4">
+                        <i class="bi bi-calendar3 me-1"></i>
+                        <span>{{ post.pub_date|date:"d E Y H:i" }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-body">
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" class="img-fluid rounded mb-4" alt="Post image">
+                {% endif %}
+                
+                <div class="post-content fs-5 lh-lg">
+                    {{ post.text|linebreaks }}
+                </div>
+            </div>
+            
+            <div class="card-footer bg-white border-0 pb-4">
+                <hr>
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="javascript:history.back()" class="btn btn-outline-primary">
+                        <i class="bi bi-arrow-left"></i> Назад
+                    </a>
+                    <div>
+                        <span class="me-3"><i class="bi bi-heart text-danger"></i> 0</span>
+                        <span><i class="bi bi-chat text-primary"></i> 0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

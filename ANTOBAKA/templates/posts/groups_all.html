@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Сообщества{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <h1 class="mb-4">Сообщества</h1>
+  
+  <div class="row">
+    {% for group in groups %}
+      <div class="col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">
+              <a href="{% url 'posts:group_list' group.slug %}" class="text-decoration-none">
+                {{ group.title }}
+              </a>
+            </h5>
+            <p class="card-text text-secondary">{{ group.description|truncatechars:150 }}</p>
+          </div>
+          <div class="card-footer bg-white border-0">
+            <a href="{% url 'posts:group_list' group.slug %}" class="btn btn-outline-primary btn-sm">
+              Перейти в сообщество <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12">
+        <div class="alert alert-info text-center py-5">
+          <i class="bi bi-people fs-1 d-block mb-3"></i>
+          <h4>Пока нет сообществ</h4>
+          <p class="mb-0">Загляните позже!</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,109 @@
+/* Основные стили для сайта Yatube */
+
+/* Плавные переходы для всех интерактивных элементов */
+a, .btn, .card, .nav-link, .dropdown-item {
+    transition: all 0.2s ease-in-out;
+}
+
+/* Стили для карточек */
+.hover-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+}
+
+/* Стили для футера */
+.hover-white:hover {
+    color: white !important;
+    text-decoration: underline !important;
+}
+
+/* Стили для кнопок */
+.btn {
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    transform: scale(1.02);
+}
+
+/* Стили для пагинации */
+.page-link {
+    color: #667eea;
+    border: none;
+    margin: 0 3px;
+    border-radius: 8px;
+}
+
+.page-item.active .page-link {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+    .display-5 {
+        font-size: 2rem;
+    }
+    
+    .card {
+        margin-bottom: 1rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+}
+
+/* Анимация загрузки */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Стили для бейджей */
+.badge {
+    font-weight: 500;
+    padding: 0.5em 1em;
+    border-radius: 20px;
+}
+
+/* Стили для цитат и выделенного текста */
+.lead {
+    font-size: 1.25rem;
+    font-weight: 300;
+}
+
+/* Красивые скроллбары */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
