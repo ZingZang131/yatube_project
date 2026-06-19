@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}{{ post.title|default:"Пост" }} - Yatube{% endblock %}
 
@@ -57,9 +58,62 @@
                     </a>
                     <div>
                         <span class="me-3"><i class="bi bi-heart text-danger"></i> 0</span>
-                        <span><i class="bi bi-chat text-primary"></i> 0</span>
+                        <span><i class="bi bi-chat text-primary"></i> {{ comments.count }}</span>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- БЛОК КОММЕНТАРИЕВ -->
+        <div class="card shadow-sm border-0 mt-4">
+            <div class="card-header bg-white border-0 pt-3">
+                <h5 class="fw-bold">
+                    <i class="bi bi-chat-dots me-2"></i>
+                    Комментарии ({{ comments.count }})
+                </h5>
+            </div>
+            <div class="card-body">
+                <!-- Форма добавления комментария -->
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'posts:add_comment' post.id %}" class="mb-4">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ form.text }}
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm mt-2">
+                            <i class="bi bi-send me-1"></i> Отправить комментарий
+                        </button>
+                    </form>
+                    <hr>
+                {% else %}
+                    <div class="alert alert-info" role="alert">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <a href="{% url 'users:login' %}" class="alert-link">Войдите</a> или 
+                        <a href="{% url 'users:signup' %}" class="alert-link">зарегистрируйтесь</a>, 
+                        чтобы оставить комментарий.
+                    </div>
+                    <hr>
+                {% endif %}
+
+                <!-- Список комментариев -->
+                {% if comments %}
+                    {% for comment in comments %}
+                        <div class="comment mb-3 {% if not forloop.last %}border-bottom pb-3{% endif %}">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong class="text-primary">{{ comment.author.username }}</strong>
+                                    <span class="text-secondary ms-2 small">{{ comment.created|date:"d.m.Y H:i" }}</span>
+                                </div>
+                            </div>
+                            <p class="mb-1 mt-2">{{ comment.text|linebreaks }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="text-center py-4">
+                        <i class="bi bi-chat-dots display-6 text-secondary"></i>
+                        <p class="text-secondary mt-2">Пока нет комментариев. Будьте первым!</p>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

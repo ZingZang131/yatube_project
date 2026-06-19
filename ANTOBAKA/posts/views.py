@@ -1,13 +1,14 @@
-# posts/views.py
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Post, Group
+from .models import Post, Group, Comment
 from .serializers import PostSerializer
+from .forms import CommentForm
 
 # ==================== HTML VIEWS ====================
 
@@ -48,8 +49,13 @@ def groups_all(request):
 
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
+    comments = Comment.objects.filter(post=post).order_by('created')
+    form = CommentForm()
+    
     context = {
         'post': post,
+        'comments': comments,
+        'form': form,
     }
     return render(request, 'posts/post_detail.html', context)
 
@@ -71,69 +77,59 @@ def profile(request, username):
     return render(request, 'posts/profile.html', context)
 
 
+@login_required
+def add_comment(request, post_id):
+    """Добавление комментария к посту через веб-интерфейс"""
+    post = get_object_or_404(Post, id=post_id)
+    
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.post = post
+            comment.save()
+            return redirect('posts:post_detail', post_id=post_id)
+    
+    return redirect('posts:post_detail', post_id=post_id)
+
+
 # ==================== API VIEWS ====================
 
 @api_view(['GET', 'POST'])
 def api_posts(request):
-    """
-    API эндпоинт для работы со списком постов.
-    
-    GET: возвращает список всех постов в формате JSON
-    POST: создает новый пост на основе переданных данных
-    """
     if request.method == 'GET':
-        # Получаем все посты, сортируем по дате публикации
         posts = Post.objects.all().order_by('-pub_date')
-        # Сериализуем queryset в JSON
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
     
     elif request.method == 'POST':
-        # Создаем сериализатор с данными из запроса
         serializer = PostSerializer(data=request.data)
-        # Проверяем валидность данных
         if serializer.is_valid():
-            # Сохраняем новый пост
-            # Если автор не указан, но пользователь авторизован - используем его
             if 'author' not in request.data and request.user.is_authenticated:
                 serializer.save(author=request.user)
             else:
                 serializer.save()
-            # Возвращаем созданный объект с кодом 201
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        # Если данные невалидны - возвращаем ошибки
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
 def api_posts_detail(request, pk):
-    """
-    API эндпоинт для работы с отдельным постом.
-    
-    GET: возвращает пост по id
-    PUT: полностью обновляет пост
-    PATCH: частично обновляет пост
-    DELETE: удаляет пост
-    """
-    # Пытаемся найти пост по id
     try:
         post = Post.objects.get(pk=pk)
     except Post.DoesNotExist:
-        # Если пост не найден - возвращаем ошибку 404
         return Response(
             {'error': 'Пост не найден'}, 
             status=status.HTTP_404_NOT_FOUND
         )
     
     if request.method == 'GET':
-        # Сериализуем и возвращаем пост
         serializer = PostSerializer(post)
         return Response(serializer.data)
     
     elif request.method in ['PUT', 'PATCH']:
-        # Для PATCH обновляем частично
         partial = request.method == 'PATCH'
-        # Передаем существующий пост и новые данные
         serializer = PostSerializer(post, data=request.data, partial=partial)
         if serializer.is_valid():
             serializer.save()
@@ -141,7 +137,5 @@ def api_posts_detail(request, pk):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     elif request.method == 'DELETE':
-        # Удаляем пост
         post.delete()
-        # Возвращаем статус 204 (успешно удалено, без содержимого)
         return Response(status=status.HTTP_204_NO_CONTENT)

@@ -22,12 +22,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     # Сторонние приложения
-    'rest_framework',  
+    'rest_framework',
+    'rest_framework.authtoken',  # Добавлено для аутентификации по токену
     
     # Локальные приложения
     'posts',
     'users.apps.UsersConfig',
     'about.apps.AboutConfig',
+    'api',  # Добавлено новое приложение api
 ]
 
 MIDDLEWARE = [
@@ -105,3 +107,13 @@ LOGIN_REDIRECT_URL = 'posts:index'
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+
+# ============= НАСТРОЙКИ DJANGO REST FRAMEWORK =============
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}

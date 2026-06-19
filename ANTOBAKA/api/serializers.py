@@ -1,14 +1,21 @@
+# api/serializers.py
 from rest_framework import serializers
-from .models import Post, Group, Comment
+from posts.models import Post, Group, Comment
 
 
 class PostSerializer(serializers.ModelSerializer):
-    author_name = serializers.CharField(source='author.username', read_only=True)
+    author = serializers.StringRelatedField(read_only=True)
     
     class Meta:
         model = Post
-        fields = ('text', 'pub_date', 'author', 'author_name', 'group', 'title')
-        read_only_fields = ('pub_date',)
+        fields = ('id', 'text', 'pub_date', 'author', 'group', 'image')
+        read_only_fields = ('author', 'pub_date')
+
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ('id', 'title', 'slug', 'description')
 
 
 class CommentSerializer(serializers.ModelSerializer):

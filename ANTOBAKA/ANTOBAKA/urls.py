@@ -1,3 +1,4 @@
+# ANTOBAKA/urls.py
 from django.contrib import admin
 from django.urls import include, path
 
@@ -6,7 +7,10 @@ urlpatterns = [
     path('auth/', include('users.urls')),
     path('auth/', include('django.contrib.auth.urls')),
     path('about/', include('about.urls', namespace='about')),
-    path('', include('posts.urls', namespace='posts')),  # <-- ВЕРНУТЬ namespace
+    path('', include('posts.urls', namespace='posts')),
+    
+    # ============= ДОБАВЬТЕ API МАРШРУТЫ =============
+    path('api/v1/', include('api.urls')),
 ]
 
 

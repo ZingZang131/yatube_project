@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 
-app_name = 'posts'  # <-- ВЕРНУТЬ app_name
+app_name = 'posts'
 
 urlpatterns = [
     # HTML маршруты
@@ -10,6 +10,9 @@ urlpatterns = [
     path('group/<slug:slug>/', views.group_posts, name='group_list'),
     path('profile/<str:username>/', views.profile, name='profile'), 
     path('post/<int:post_id>/', views.post_detail, name='post_detail'),
+    
+    # HTML маршрут для добавления комментария
+    path('post/<int:post_id>/comment/', views.add_comment, name='add_comment'),
     
     # API маршруты
     path('api/v1/posts/', views.api_posts, name='api_posts'),
