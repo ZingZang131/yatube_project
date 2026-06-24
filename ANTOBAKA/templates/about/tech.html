@@ -2,19 +2,94 @@
 {% block title %}Технологии{% endblock %}
 {% block content %}
 <div class="container py-5">
-  <div class="row">
-    <h1>Вот что я умею</h1>
-    <aside class="col-12 col-md-3">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">Python</li>
-        <li class="list-group-item">Django</li>
-        <li class="list-group-item">Bootstrap</li>
-        <li class="list-group-item">SQLite</li>
-      </ul>
-    </aside>
-    <article class="col-12 col-md-9">
-      <p>Здесь я расскажу о технологиях, которые использовал при создании этого сайта.</p>
-    </article>
-  </div>
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Заголовок -->
+            <div class="text-center mb-5">
+                <h1 class="display-4">💻 Технологии проекта</h1>
+                <p class="lead text-muted">Инструменты, которые я использовал для создания Yatube</p>
+            </div>
+            
+            <!-- Карточка с технологиями -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title">⚡ Стек технологий</h3>
+                    
+                    <!-- Python -->
+                    <div class="d-flex align-items-start mb-4 p-3 border rounded">
+                        <div class="flex-shrink-0">
+                            <span class="display-6">🐍</span>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="mb-1">Python</h5>
+                            <p class="mb-1">Основной язык программирования. Я использую его благодаря 
+                            простоте и читаемости кода.</p>
+                            <span class="badge bg-primary">Версия: 3.14</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Django -->
+                    <div class="d-flex align-items-start mb-4 p-3 border rounded">
+                        <div class="flex-shrink-0">
+                            <span class="display-6">🎸</span>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="mb-1">Django</h5>
+                            <p class="mb-1">Мощный фреймворк для веб-разработки. Помогает быстро 
+                            создавать сайты с чистой архитектурой.</p>
+                            <span class="badge bg-success">Версия: 4.2.29</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Bootstrap -->
+                    <div class="d-flex align-items-start mb-4 p-3 border rounded">
+                        <div class="flex-shrink-0">
+                            <span class="display-6">🎨</span>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="mb-1">Bootstrap</h5>
+                            <p class="mb-1">Фреймворк для стилизации. Делает сайт адаптивным и 
+                            красивым без лишних усилий.</p>
+                            <span class="badge bg-info text-dark">Версия: 5.3</span>
+                        </div>
+                    </div>
+                    
+                    <!-- SQLite -->
+                    <div class="d-flex align-items-start p-3 border rounded">
+                        <div class="flex-shrink-0">
+                            <span class="display-6">🗄️</span>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="mb-1">SQLite</h5>
+                            <p class="mb-1">Лёгкая база данных. Идеальна для разработки и небольших 
+                            проектов.</p>
+                            <span class="badge bg-warning text-dark">Версия: 3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Дополнительная информация -->
+            <div class="card shadow-sm mt-4">
+                <div class="card-body">
+                    <h4 class="card-title">📊 Почему я выбрал эти технологии?</h4>
+                    <p>
+                        Django + Python — это мощная связка для быстрой разработки. 
+                        Bootstrap помогает делать красивый интерфейс, а SQLite — 
+                        простую и надёжную базу данных.
+                    </p>
+                    <p class="mb-0">
+                        Все эти инструменты отлично сочетаются и позволяют создавать 
+                        полноценные веб-приложения с минимальными затратами времени.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Кнопка на главную -->
+            <div class="text-center mt-4">
+                <a href="/" class="btn btn-primary">На главную</a>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
