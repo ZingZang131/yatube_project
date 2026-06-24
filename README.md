@@ -961,18 +961,43 @@ python manage.py runserver
 **Присоединяйся и стань частью увлекательного мира блогинга на Yatube!**
 
 ----------------
-чисто для меня 
+# чисто для меня 
 -------
-окуружение
+# окуружение
 python -m venv venv 
 
 source venv/Scripts/activate
 -------------------------
-зависимости 
+# зависимости 
 pip install -r requirements.txt
 --------------------
-запуск 
-python manage.py runserver
+# миграции
+python manage.py makemigrations
+python manage.py migrate
+python manage.py showmigrations
 
+-----------------------
+# создание суперпользователя
+python manage.py createsuperuser
+
+----------------------------
+# запуск 
+python manage.py runserver
+---------------------------
+# api
+# API доступен тут ⭐
+http://127.0.0.1:8000/api/v1/
+
+# Админка
+http://127.0.0.1:8000/admin/
+
+# Посты (JSON)
+http://127.0.0.1:8000/api/v1/posts/
+
+# Конкретный пост
+http://127.0.0.1:8000/api/v1/posts/1/
+-----------------
+# если вдруг
+pip install --upgrade django
 
 . ./run_windows.sh
