@@ -1,10 +1,73 @@
 {% extends "base.html" %}
-{% block title %}Об авторе проекта{% endblock %}
+{% block title %}Об авторе{% endblock %}
 {% block content %}
 <div class="container py-5">
-  <h1>Привет, я автор</h1>
-  <p>
-    Здесь я расскажу о себе, своём пути в программировании и о том, что меня вдохновляет.
-  </p>
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Заголовок -->
+            <div class="text-center mb-5">
+                <h1 class="display-4">👋 Привет, я Иван</h1>
+                <p class="lead text-muted">Создатель этого проекта</p>
+            </div>
+            
+            <!-- Карточка с информацией -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">📖 Обо мне</h3>
+                    <p class="card-text">
+                        Меня зовут <strong>Иван</strong>. Я изучаю программирование и веб-разработку, 
+                        чтобы создавать полезные и красивые сайты.
+                    </p>
+                    <p class="card-text">
+                        Этот проект — Yatube — моя первая серьёзная работа на Django. 
+                        Здесь я учусь применять знания на практике и делиться ими с другими.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Карточка "Что меня вдохновляет" -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">✨ Что меня вдохновляет</h3>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            🚀 <strong>Создание полезных продуктов</strong>
+                            <p class="text-muted small mb-0">Когда код помогает людям решать задачи</p>
+                        </li>
+                        <li class="list-group-item">
+                            📚 <strong>Постоянное обучение</strong>
+                            <p class="text-muted small mb-0">Каждый день узнаю что-то новое</p>
+                        </li>
+                        <li class="list-group-item">
+                            🌍 <strong>Сообщество разработчиков</strong>
+                            <p class="text-muted small mb-0">Обмен опытом и идеями</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Контакты -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title">📫 Свяжитесь со мной</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Email:</strong> ivan@example.com</p>
+                            <p><strong>GitHub:</strong> <a href="https://github.com/ZingZang131">ZingZang131</a></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Телефон:</strong> +7 (999) 123-45-67</p>
+                            <p><strong>Город:</strong> Наро-Фоминск</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Кнопка на главную -->
+            <div class="text-center mt-4">
+                <a href="/" class="btn btn-primary">На главную</a>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
